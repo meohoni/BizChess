@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 7
   titleKey: Hung Vuong
-  value: 0
-  description_key: 
-  feeBuildHouse: 0
-  feeBuildHotel: 0
-  morgate: 0
-  landingFees: 
+  value: 220
+  feeBuildHouse: 150
+  feeBuildHotel: 300
+  morgate: 110
+  landingFees: 120000005a000000fa000000bc0200006b0300001a040000

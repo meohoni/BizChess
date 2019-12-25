@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 3
   titleKey: Hoang Van Thu
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 140
+  feeBuildHouse: 100
+  feeBuildHotel: 200
+  morgate: 70
+  landingFees: 0a0000003200000096000000c201000071020000ee020000

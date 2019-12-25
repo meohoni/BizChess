@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 24
   type: 1
-  colorName: 12
+  colorName: 13
   titleKey: Khi Van
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 0
+  feeBuildHouse: 0
+  feeBuildHotel: 0
+  morgate: 0
+  landingFees: 

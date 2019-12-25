@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4504990244822870151}
   - component: {fileID: 4504990244822870148}
   m_Layer: 0
-  m_Name: player
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,8 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b847ab8b9b6034245bc57b14d69af8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarPrefab: {fileID: 0}
-  tokenPrefab: {fileID: 7865586349298183868, guid: 10e8d9dbe432bcf4999ca4367c7dd4fe,
-    type: 3}
-  playerInfoPrefab: {fileID: 0}
-  money: 5000
+  money: 1500

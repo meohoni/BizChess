@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 7
   titleKey: Hau Giang
-  value: 60
-  descriptionKey: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 240
+  feeBuildHouse: 150
+  feeBuildHotel: 300
+  morgate: 120
+  landingFees: 14000000640000002c010000ee0200009d0300004c040000

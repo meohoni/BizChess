@@ -7,45 +7,53 @@ using UnityEngine;
 public class CardController : MonoBehaviour
 {
     public const string CARD_TITLE_PREFIX = "CARD_TITLE_";
+    public const int CONSTRUCTION_LEVEL = 5;
 
     [SerializeField] private Sprite cornerCard;
 
     private List<Card> cards;
-    private Dictionary<int, CardData> cardDataDict;
-
-    private Dictionary<ColorName, List<GameObject>> cardGroups;
+    private List<Card> stationCards;
+    private List<Card> utilityCards;
+    private Dictionary<int, CardInfo> cardInfoDict;
+    private Dictionary<ColorName, List<Card>> titleDeedGroups;
     private Board board;
 
-    private DeedCardController deedCardController;
-    private ChestCardController chestCardController;
+    private TitleDeedCardController titleDeedCardController;
+    private UtilityCardController utilityCardController;
+    private StationCardController stationCardController;
+    private CommunityChestCardController communityChestCardController;
     private ChanceCardController chanceCardController;
 
     public List<Card> Cards { get => cards; }
 
+    // UI Popup CardInfoPanel
+    [SerializeField] private GameObject cardInfoPanel;
+    [SerializeField] private TextMeshProUGUI cardTitleTxt;
+
+    private static bool isCardProcessing = false;
+
+    public static bool IsCardProcessing { get => isCardProcessing; set => isCardProcessing = value; }
+
+
     void Start()
     {
         board = GetComponent<Board>();
-        deedCardController = GetComponent<DeedCardController>();
-        chestCardController = GetComponent<ChestCardController>();
+        titleDeedCardController = GetComponent<TitleDeedCardController>();
+        utilityCardController = GetComponent<UtilityCardController>();
+        stationCardController = GetComponent<StationCardController>();
+        communityChestCardController = GetComponent<CommunityChestCardController>();
         chanceCardController = GetComponent<ChanceCardController>();
 
-        cardDataDict = new Dictionary<int, CardData>();
-        UnityEngine.Object[] cardDataObjects = Resources.LoadAll("SO/Cards", typeof(CardData));
+        cardInfoDict = new Dictionary<int, CardInfo>();
+        UnityEngine.Object[] cardDataObjects = Resources.LoadAll("SO/Cards", typeof(CardInfo));
 
         for (int i = 0; i < cardDataObjects.Length; i++)
         {
-            CardData cd = (CardData)cardDataObjects[i];
-            if (!cardDataDict.ContainsKey(cd.Id))
+            CardInfo ci = (CardInfo)cardDataObjects[i];
+            if (!cardInfoDict.ContainsKey(ci.Id))
             {
-                cardDataDict.Add(cd.Id, cd);
+                cardInfoDict.Add(ci.Id, ci);
             }
-        }
-
-        foreach(var cardData in cardDataDict)
-        {
-            print(cardData.Value.TitleKey);
-            print(cardData.Value.Type);
-            print(cardData.Value.ColorName);
         }
 
         InitCards();
@@ -53,22 +61,24 @@ public class CardController : MonoBehaviour
 
     private void InitCards()
     {
-        int cardId;
-        CardData cardData;
+        CardInfo cardInfo;
 
         cards = new List<Card>();
-        cardGroups = new Dictionary<ColorName, List<GameObject>>();
+        stationCards = new List<Card>();
+        utilityCards = new List<Card>();
+        titleDeedGroups = new Dictionary<ColorName, List<Card>>(new ColorNameComparer());
         UnityEngine.Object cardPrefab = Resources.Load("Prefabs/Card");
         UnityEngine.Object cardTextParentPrefab = Resources.Load("Prefabs/CardTextParent");
         GameObject uiCanvas = GameObject.Find("UICanvas");
 
         Dictionary<int, Vector2> localPostionOfCards = GetLocalPositionOfCards();
-        
+
         for (int i = 1; i <= Board.NUM_CARDS; i++)
         {
-            if (cardDataDict.ContainsKey(i))
+            int cardId = i;
+            if (cardInfoDict.ContainsKey(cardId))
             {
-                cardData = cardDataDict[i];
+                cardInfo = cardInfoDict[cardId];
             }
             else // log error
             {
@@ -76,25 +86,15 @@ public class CardController : MonoBehaviour
                 break;
             }
 
+            cardInfo.TitleKey = CARD_TITLE_PREFIX + cardId;
+
             // create object card.
             Vector2 localPosition = localPostionOfCards[i];
             GameObject obj = Instantiate(cardPrefab, GetWorldPositionOfCard(board.gameObject.transform.position, localPosition), Quaternion.identity) as GameObject;
             obj.transform.SetParent(board.gameObject.transform);
 
             // assign color
-            obj.GetComponent<SpriteRenderer>().color = ColorHelper.GetColorValue(cardData.ColorName);
-
-            // assign color group
-            if (cardGroups.ContainsKey(cardData.ColorName))
-            {
-                cardGroups[cardData.ColorName].Add(obj);
-            }
-            else
-            {
-                List<GameObject> group = new List<GameObject>();
-                group.Add(obj);
-                cardGroups.Add(cardData.ColorName, group);
-            }
+            obj.GetComponent<SpriteRenderer>().color = ColorHelper.GetColorValue(cardInfo.ColorName);
 
             // remove the top part if it is a corner card and assign the sprite cornerCard
             if (i == 1 || i == 8 || i == 19 || i == 26)
@@ -111,7 +111,7 @@ public class CardController : MonoBehaviour
                 obj.transform.Rotate(new Vector3(0, 0, -90));
             }
             // corner top left
-            else if(i == 19)
+            else if (i == 19)
             {
                 obj.transform.Rotate(new Vector3(0, 0, -90));
             }
@@ -133,53 +133,197 @@ public class CardController : MonoBehaviour
             // END ROTATE
 
             // assign card name
-            GetCardText(obj, i, cardTextParentPrefab, uiCanvas);
+            GetCardText(obj, i, cardTextParentPrefab, cardInfo, uiCanvas);
 
             Card card = obj.GetComponent<Card>();
-            card.Init(i);
+            card.Init(cardInfo);
 
             // add to the list of cards
             cards.Add(card);
+
+            // assign to stationCards list
+            if (card.GetCardType() == CardType.STATION)
+            {
+                stationCards.Add(card);
+            }
+
+            // assign to utilityCards list
+            if (card.GetCardType() == CardType.UTILITY)
+            {
+                utilityCards.Add(card);
+            }
+
+            // assign color group
+            if (titleDeedGroups.ContainsKey(cardInfo.ColorName))
+            {
+                titleDeedGroups[cardInfo.ColorName].Add(card);
+            }
+            else
+            {
+                List<Card> group = new List<Card>();
+                group.Add(card);
+                titleDeedGroups.Add(cardInfo.ColorName, group);
+            }
         }
     }
 
-    public void ProcessDeedCard(Player currentPlayer, List<Player> players)
+    public void ProcessTitleDeedCard(Player player, List<Player> players)
     {
-        Card card = cards[currentPlayer.CurrentPosition];
+        Card card = cards[player.CurrentPosition];
+        titleDeedCardController.ProcessCard(card, player, players);
+    }
 
-        // if deed card,
-        //      if no owner, ask to buy
-        //      if having owner
-        //              if owner is this player, 
-        //                      if can build building, ask build
-        //              if owner is another player, pay fee.
+    // if utility card, ask for buy
+    public void ProcessUtilityCard(Player player, List<Player> players)
+    {
+        Card card = cards[player.CurrentPosition];
+        utilityCardController.ProcessCard(card, player, players);
+    }
+
+    public void ProcessStationCard(Player player, List<Player> players)
+    {
+        Card card = cards[player.CurrentPosition];
+        stationCardController.ProcessCard(card, player, players);
     }
 
     public void ProcessChanceCard(Player player, List<Player> players)
     {
-        throw new NotImplementedException();
+
     }
 
-    public void ProcessChestCard(Player player, List<Player> players)
+    public void ProcessCommunityChestCard(Player player, List<Player> players)
     {
-        throw new NotImplementedException();
+
     }
 
-    // if utility card, ask for buy
-    public void ProcessUtilityCard(Player currentPlayer, List<Player> players)
+    public void DisplayCardInfo(Card card)
     {
-        Card card = cards[currentPlayer.CurrentPosition];
+        //open the appropriated card info panel based on its type.
+        // close the others panels.
+        if (card.GetCardType() == CardType.TITLE_DEED)
+        {
+            titleDeedCardController.DisplayCardInfo(card);
+            utilityCardController.HideCardInfo();
+            stationCardController.HideCardInfo();
+        }
+        else if (card.GetCardType() == CardType.UTILITY)
+        {
+            utilityCardController.DisplayCardInfo(card);
+            titleDeedCardController.HideCardInfo();
+            stationCardController.HideCardInfo();
+        }
+        else if (card.GetCardType() == CardType.STATION)
+        {
+            stationCardController.DisplayCardInfo(card);
+            titleDeedCardController.HideCardInfo();
+            utilityCardController.HideCardInfo();
+        } else
+        {
+            return; // if not above types then do nothing.
+        }
 
+        //update title
+        LocalizeTM localizedTMText = cardTitleTxt.GetComponent<LocalizeTM>();
+        localizedTMText.localizationKey = card.GetTitleKey();
+        localizedTMText.UpdateLocale();
+
+        cardInfoPanel.SetActive(true);
     }
 
+    public void OnCloseCardInfo()
+    {
+        cardInfoPanel.SetActive(false);
+    }
 
+    public void OnYesButton()
+    {
+        if (UIPanelController.HasClicked) return;
+        if (SessionData.CurrentPlayer.IsAIPlayer && !SessionData.AutoClickHasClicked) return;
+
+        UIPanelController.HasClicked = true;
+        if (SessionData.ActionType == ActionType.BUY_LAND)
+        {
+            if (SessionData.Card.GetCardType() == CardType.TITLE_DEED)
+            {
+                titleDeedCardController.BuyLand(SessionData.Card, SessionData.CurrentPlayer, SessionData.Players);
+            }
+            else if (SessionData.Card.GetCardType() == CardType.STATION)
+            {
+                stationCardController.BuyLand(SessionData.Card, SessionData.CurrentPlayer, SessionData.Players);
+            }
+            else if (SessionData.Card.GetCardType() == CardType.UTILITY)
+            {
+                utilityCardController.BuyLand(SessionData.Card, SessionData.CurrentPlayer, SessionData.Players);
+            }
+        }
+        else if (SessionData.ActionType == ActionType.BUILD)
+        {
+            if (SessionData.Card.GetCardType() == CardType.TITLE_DEED)
+            {
+                titleDeedCardController.Build(SessionData.Card, SessionData.CurrentPlayer, SessionData.Players);
+            }
+        }
+    }
+
+    public void OnNoButton()
+    {
+        if (UIPanelController.HasClicked) return;
+        if (SessionData.CurrentPlayer.IsAIPlayer && !SessionData.AutoClickHasClicked) return;
+
+        UIPanelController.HasClicked = true;
+        CardController.IsCardProcessing = false;
+    }
+
+    // check if a card belongs to a group that belongs to the same onwer
+    public bool IsLandGroup(Card card)
+    {
+        int i = 0;
+        if (titleDeedGroups.ContainsKey(card.GetCardData().ColorName))
+        {
+            foreach (Card c in titleDeedGroups[card.GetCardData().ColorName])
+            {
+                if(c.Owner != null && c.Owner.Id == card.Owner.Id)
+                {
+                    i++;
+                }
+                
+            }
+        }
+        return (i == 3) ? true : false;
+    }
+
+    public int GetNumStationsBelongToPlayer(Player player)
+    {
+        return GetNumCardsBelongToPlayer(player, stationCards);
+    }
+
+    public int GetNumUtilitiesBelongToPlayer(Player player)
+    {
+        return GetNumCardsBelongToPlayer(player, utilityCards);
+    }
+
+    private int GetNumCardsBelongToPlayer(Player player, List<Card> _cards)
+    {
+        int i = 0;
+        foreach (Card c in _cards)
+        {
+            if (c.Owner != null)
+            {
+                if (c.Owner.Id == player.Id)
+                {
+                    i++;
+                }
+            }
+        }
+        return i;
+    }
     /**********************************************************************************
      * 
      * UTILITY METHODS
      * 
      *********************************************************************************/
 
-    private void GetCardText(GameObject card, int index, UnityEngine.Object cardTextParentPrefab, GameObject uiCanvas)
+    private void GetCardText(GameObject card, int index, UnityEngine.Object cardTextParentPrefab, CardInfo cardData, GameObject uiCanvas)
     {
         if (index == 1 || index == 8 || index == 19 || index == 26)
         {
@@ -188,7 +332,9 @@ public class CardController : MonoBehaviour
 
         GameObject obj = Instantiate(cardTextParentPrefab) as GameObject;
         obj.transform.SetParent(uiCanvas.transform, false);
-        obj.transform.position = card.transform.position;
+        Vector3 pos = card.transform.position;
+        pos.z = 0.0f;
+        obj.transform.position = pos;
 
         if (index > 1 && index < 8)
         {
@@ -209,10 +355,17 @@ public class CardController : MonoBehaviour
             obj.transform.Find("CardText").transform.localRotation = Quaternion.Euler(Vector3.zero);
         }
 
-        LocalizeTM localizedTMText = obj.transform.Find("CardText").GetComponent<LocalizeTM>();
-        localizedTMText.localizationKey = CARD_TITLE_PREFIX + (index);
-
-        localizedTMText.UpdateLocale();
+        TextMeshProUGUI localizedTMText = obj.transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+        if(cardData.Type == CardType.TITLE_DEED ||
+           cardData.Type == CardType.UTILITY ||
+           cardData.Type == CardType.STATION)
+        {
+            localizedTMText.SetText(String.Format("{0}{1}{2}", LocaleHelper.GetLocalizationValue(cardData.TitleKey), "\n", String.Format(LocaleHelper.GetMoneyValueString(), cardData.Value)));
+        }
+        else
+        {
+            localizedTMText.SetText(LocaleHelper.GetLocalizationValue(cardData.TitleKey));
+        }
     }
 
     // Convert the relative position of a child  card of the board to world position.

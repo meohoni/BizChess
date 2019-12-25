@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 2
   titleKey: An Duong Vuong
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 260
+  feeBuildHouse: 150
+  feeBuildHotel: 300
+  morgate: 130
+  landingFees: 160000006e0000004a01000020030000cf0300007e040000

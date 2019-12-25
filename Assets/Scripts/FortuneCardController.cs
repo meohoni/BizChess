@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChestCard : Card
+public class FortuneCardController : MonoBehaviour
 {
-    private int ruleNumber;
+  
 }

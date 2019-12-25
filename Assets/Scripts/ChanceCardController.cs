@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChanceCardController : MonoBehaviour
+public class ChanceCardController : FortuneCardController
 {
     // Start is called before the first frame update
     void Start()

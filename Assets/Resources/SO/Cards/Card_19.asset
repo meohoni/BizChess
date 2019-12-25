@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   type: 5
-  colorName: 12
+  colorName: 13
   titleKey: Bai Dau Xe Mien Phi
   value: 0
-  description_key: 
   feeBuildHouse: 0
   feeBuildHotel: 0
   morgate: 0

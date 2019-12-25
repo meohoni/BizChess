@@ -17,6 +17,7 @@ public enum ColorName
     LIME,   // RGB(0, 255, 0)
     PURPLE, // RGB(128, 0, 128)
     GOLD,   // RGB(255, 215, 0)
+    GREY,   // RGB(128, 128, 128)
     NONE,   // RGB(255, 255 , 255)
 }
 
@@ -111,6 +112,11 @@ public class ColorHelper
         if (!colorDict.ContainsKey(ColorName.GOLD))
         {
             colorDict.Add(ColorName.GOLD, new Color32(255, 215, 0, 255));
+        }
+
+        if (!colorDict.ContainsKey(ColorName.GREY))
+        {
+            colorDict.Add(ColorName.GREY, new Color32(128, 128, 128, 255));
         }
 
         if (!colorDict.ContainsKey(ColorName.NONE))

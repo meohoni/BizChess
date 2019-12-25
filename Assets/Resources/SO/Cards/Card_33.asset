@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 6
   titleKey: Luong Dinh Cua
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 320
+  feeBuildHouse: 200
+  feeBuildHotel: 400
+  morgate: 160
+  landingFees: 1c00000096000000c201000084030000b004000078050000

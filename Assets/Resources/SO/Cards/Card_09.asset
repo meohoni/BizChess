@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 9
   titleKey: Cong Hoa
-  value: 60
-  descriptionKey: 
+  value: 120
   feeBuildHouse: 50
   feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  morgate: 60
+  landingFees: 0800000028000000640000002c010000c201000058020000

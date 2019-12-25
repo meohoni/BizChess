@@ -35,11 +35,10 @@ public abstract class LocalizeBase : MonoBehaviour
     {
         // The first Text object getting here inits the CultureInfo data and loads the language file,
         // if any
-        if (!Locale.currentLanguageHasBeenSet)
-        {
-            Locale.currentLanguageHasBeenSet = true;
-            SetCurrentLanguage(Locale.PlayerLanguage);
-        }
+        //if (!Locale.currentLanguageHasBeenSet)
+        //{
+        //    SetCurrentLanguage(Locale.PlayerLanguage);
+        //}
         UpdateLocale();
     }
 
@@ -64,12 +63,13 @@ public abstract class LocalizeBase : MonoBehaviour
     {
         Locale.CurrentLanguage = language.ToString();
         Locale.PlayerLanguage = language;
-        Localize[] allTexts = GameObject.FindObjectsOfType<Localize>();
-        LocalizeTM[] allTextsTM = GameObject.FindObjectsOfType<LocalizeTM>();
-        for (int i = 0; i < allTexts.Length; i++)
-            allTexts[i].UpdateLocale();
-        for (int i = 0; i < allTextsTM.Length; i++)
-            allTextsTM[i].UpdateLocale();
+        Locale.currentLanguageHasBeenSet = true;
+        //Localize[] allTexts = GameObject.FindObjectsOfType<Localize>();
+        //LocalizeTM[] allTextsTM = GameObject.FindObjectsOfType<LocalizeTM>();
+        //for (int i = 0; i < allTexts.Length; i++)
+        //    allTexts[i].UpdateLocale();
+        //for (int i = 0; i < allTextsTM.Length; i++)
+        //    allTextsTM[i].UpdateLocale();
     }
 
 }

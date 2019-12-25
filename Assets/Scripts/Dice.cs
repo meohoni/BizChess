@@ -12,6 +12,8 @@ public class Dice : MonoBehaviour {
     private static bool isDiceRunning = false;
     private static int counter = 0;
 
+    private static int i = 0;
+
     // material cache
     private static ArrayList matNames = new ArrayList();
 	private static ArrayList materials = new ArrayList();
@@ -54,8 +56,84 @@ public class Dice : MonoBehaviour {
         }
 
         isDiceRunning = false;
-        print("die1Index " + dieANum);
-        print("die2Index " + dieBNum);
+        //print("die1Index " + dieANum);
+        //print("die2Index " + dieBNum);
+
+        //dieBNum = 0;
+
+        // test station
+        //if (i <= 1)
+        //{
+        //    dieANum = 3;       
+        //    i++;
+        //}
+        //else if (i == 2 || i == 3)
+        //{
+        //    dieANum = 10;
+        //    i++;
+        //}
+        //else if (i == 4 || i == 5)
+        //{
+        //    dieANum = 8;
+        //    i++;
+        //}
+        //else if (i == 6 || i == 7)
+        //{
+        //    dieANum = 10;
+        //    i++;
+        //}
+
+        // test utility
+        //if (i <= 1)
+        //{
+        //    dieANum = 9;
+        //    i++;
+        //}
+        //else if (i == 2 || i == 3)
+        //{
+        //    dieANum = 19;
+        //    i++;
+        //}
+
+        // test prison
+        //if (i <= 1)
+        //{
+        //    dieANum = 8;
+        //    i++;
+        //}
+        //else if (i == 2)
+        //{
+        //    dieANum = 17;
+        //    i++;
+        //}
+        //else if (i == 3)
+        //{
+        //    dieANum = 36;
+        //    i++;
+        //}
+
+        // test pass start no money
+        //if (i <= 1)
+        //{
+        //    dieANum = 10;
+        //    i++;
+        //}
+        //else if (i == 2)
+        //{
+        //    dieANum = 26;
+        //    i++;
+        //}
+        //else if (i == 3)
+        //{
+        //    dieANum = 26;
+        //    i++;
+        //}
+
+        //else
+        //{
+        //    dieANum = 10;
+        //    dieBNum = 26;
+        //}
     }
 
     private IEnumerator RollDie(GameObject die, System.Action<int> output)

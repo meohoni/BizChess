@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 3
   titleKey: Le Dai Hanh
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 160
+  feeBuildHouse: 100
+  feeBuildHotel: 200
+  morgate: 80
+  landingFees: 0c0000003c000000b4000000f4010000bc02000084030000

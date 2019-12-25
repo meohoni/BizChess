@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 14
   type: 8
-  colorName: 12
+  colorName: 13
   titleKey: Ben Xe Mien Dong
-  value: 60
-  description_key: 
+  value: 200
   feeBuildHouse: 50
   feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  morgate: 100
+  landingFees: 190000003200000064000000c8000000

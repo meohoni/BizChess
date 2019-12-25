@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 15
   type: 0
-  color: 0
+  colorName: 0
   titleKey: Nguyen Tri Phuong
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 180
+  feeBuildHouse: 100
+  feeBuildHotel: 200
+  morgate: 90
+  landingFees: 0e00000046000000c800000026020000ee020000b6030000

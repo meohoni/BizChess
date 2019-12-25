@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 11
   titleKey: Nguyen Hue
-  value: 60
-  descriptionKey: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 400
+  feeBuildHouse: 200
+  feeBuildHotel: 400
+  morgate: 200
+  landingFees: 32000000c80000005802000078050000a4060000d0070000

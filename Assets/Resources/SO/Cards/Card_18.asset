@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   type: 0
-  color: 0
+  colorName: 0
   titleKey: Pham The Hien
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 200
+  feeBuildHouse: 100
+  feeBuildHotel: 200
+  morgate: 100
+  landingFees: 1000000050000000dc0000005802000020030000e8030000

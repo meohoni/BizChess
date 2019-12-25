@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 9
   titleKey: Quang Trung
-  value: 60
-  descriptionKey: 
+  value: 100
   feeBuildHouse: 50
   feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  morgate: 50
+  landingFees: 060000001e0000005a0000000e0100009001000026020000

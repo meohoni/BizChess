@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8
   type: 4
-  colorName: 12
+  colorName: 13
   titleKey: Tham Tu
   value: 0
-  description_key: 
   feeBuildHouse: 0
   feeBuildHotel: 0
   morgate: 0

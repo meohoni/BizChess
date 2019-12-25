@@ -24,10 +24,10 @@ public class PlayerConfigManager : MonoBehaviour
         }
 
         playerConfigs = new List<PlayerConfig>();
-        playerConfigs.Add(new PlayerConfig(1, ColorName.BLUE, "Number 1" , false));
-        playerConfigs.Add(new PlayerConfig(2, ColorName.RED, "Number 2", true));
-        playerConfigs.Add(new PlayerConfig(3, ColorName.GREEN, "Number 3", true));
-        playerConfigs.Add(new PlayerConfig(4, ColorName.YELLOW, "Number 4", true));
+        playerConfigs.Add(new PlayerConfig(1, ColorName.BLUE, "Number 1" , 0, true));
+        playerConfigs.Add(new PlayerConfig(2, ColorName.RED, "Number 2", 1, true));
+        //playerConfigs.Add(new PlayerConfig(3, ColorName.GREEN, "Number 3", 2, true));
+        //playerConfigs.Add(new PlayerConfig(4, ColorName.YELLOW, "Number 4", 3, true));
         MenuManager.SetVietnamese();
     }
 

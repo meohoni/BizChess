@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 34
   type: 2
-  colorName: 12
+  colorName: 13
   titleKey: Co Hoi
   value: 0
-  description_key: 
   feeBuildHouse: 0
   feeBuildHotel: 0
   morgate: 0

@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public enum CardType
 {
-    DEED,
+    TITLE_DEED,
     COMMUNITY_CHEST,
     CHANCE,
     START,
@@ -19,40 +19,63 @@ public enum CardType
 
 public class Card : MonoBehaviour
 {
-    private CardType type;
+    private CardInfo cardInfo;
+    private Player owner;
+    private int constructionLevel = 0;
 
-    public CardType Type { get => type; }
+    public Player Owner { get => owner; set => owner = value; }
+    public int ConstructionLevel { get => constructionLevel; set => constructionLevel = value; }
 
-    public void Init(int index)
+    public void Init(CardInfo _cardInfo)
     {
-        switch (index)
-        {
-            case 1:
-                {
-                    type = CardType.START;
-                    break;
-                }
-            case 8:
-                {
-                    type = CardType.VISIT_PRISON;
-                    break;
-                }
-            case 19:
-                {
-                    type = CardType.PARKING;
-                    break;
-                }
-            case 26:
-                {
-                    type = CardType.PRISON;
-                    break;
-                }
-            default:
-                {
-                    type = CardType.DEED;
-                    break;
-                }
-        }
+        cardInfo = _cardInfo;
+    }
+
+    public CardType GetCardType()
+    {
+        return cardInfo.Type;
+    }
+
+    public string GetTitleKey()
+    {
+        return cardInfo.TitleKey;
+    }
+
+    public CardInfo GetCardData()
+    {
+        return cardInfo;
+    }
+
+    public int GetValue()
+    {
+        return cardInfo.Value;
+    }
+
+    public int[] GetLandingFees()
+    {
+        return cardInfo.LandingFees;
+    }
+
+    public int GetMorgate()
+    {
+        return cardInfo.Morgate;
+    }
+
+    public int GetFeeBuildHouse()
+    {
+        return cardInfo.FeeBuildHouse;
+    }
+
+    public int GetFeeBuildHotel()
+    {
+        return cardInfo.FeeBuildHotel;
+    }
+
+    public void OnClick()
+    {
+        Board board = FindObjectOfType<Board>();
+        CardController cc = board.GetComponent<CardController>();
+        cc.DisplayCardInfo(this);
     }
 
 }

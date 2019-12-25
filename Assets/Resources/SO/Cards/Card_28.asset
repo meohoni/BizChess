@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 2
   titleKey: Le Van Viet
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 280
+  feeBuildHouse: 150
+  feeBuildHotel: 300
+  morgate: 140
+  landingFees: 1800000078000000680100005203000001040000b0040000

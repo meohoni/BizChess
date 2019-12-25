@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 5
   titleKey: Luy Ban Bich
-  value: 60
-  descriptionKey: 
+  value: 80
   feeBuildHouse: 50
   feeBuildHotel: 100
-  morgate: 30
+  morgate: 40
   landingFees: 04000000140000003c000000b400000040010000c2010000

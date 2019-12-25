@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   type: 3
-  colorName: 12
+  colorName: 13
   titleKey: Khoi Hanh
   value: 0
-  description_key: 
   feeBuildHouse: 0
   feeBuildHotel: 0
   morgate: 0

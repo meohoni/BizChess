@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 6
   type: 1
-  colorName: 12
-  titleKey: Khi Van
+  colorName: 13
+  titleKey: CARD_TITLE_6
   value: 0
-  descriptionKey: 
   feeBuildHouse: 0
   feeBuildHotel: 0
   morgate: 0

@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 11
   titleKey: Le Loi
-  value: 60
-  descriptionKey: 
+  value: 350
   feeBuildHouse: 50
   feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  morgate: 175
+  landingFees: 23000000af000000f40100004c04000014050000dc050000

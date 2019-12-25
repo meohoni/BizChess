@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New CardData", menuName = "Card Data", order = 51)]
-public class CardData : ScriptableObject
+[CreateAssetMenu(fileName = "New CardInfo", menuName = "Card Info", order = 51)]
+public class CardInfo : ScriptableObject
 {
     [SerializeField] private int id;
     [SerializeField] private CardType type;
     [SerializeField] private ColorName colorName;
     [SerializeField] private string titleKey;
     [SerializeField] private int value;
-    [SerializeField] private string descriptionKey;
     [SerializeField] private int feeBuildHouse;
     [SerializeField] private int feeBuildHotel;
     [SerializeField] private int morgate;
@@ -21,7 +20,6 @@ public class CardData : ScriptableObject
     public ColorName ColorName { get => colorName; }
     public string TitleKey { get => titleKey; set => titleKey = value; }
     public int Value { get => value; }
-    public string DescriptionKey { get => descriptionKey; }
     public int FeeBuildHouse { get => feeBuildHouse; }
     public int FeeBuildHotel { get => feeBuildHotel; }
     public int Morgate { get => morgate; }

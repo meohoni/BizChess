@@ -3,9 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Board : MonoBehaviour
 {
+    [SerializeField] UnityEvent tapEvent;
     // properties of the board
     public const int X_DIM = 9;
     public const int Y_DIM = 13;
@@ -13,19 +15,19 @@ public class Board : MonoBehaviour
 
     private CardController cardController;
     private PlayerController playerController;
+    private UIPanelController uiPanelController;
     private Dice dice;
-    private bool isFinishTurn = true;
+    private static bool isFinishTurn = true;
     private bool isGameOver = false;
+
+    public static bool IsFinishTurn { get => isFinishTurn; }
 
     void Start()
     {
-        Init();
-    }
-
-    private void Init()
-    {
         cardController = GetComponent<CardController>();
         playerController = GetComponent<PlayerController>();
+        uiPanelController = GetComponent<UIPanelController>();
+
         dice = GetComponent<Dice>();
         ColorHelper.BuildColorDict();
     }
@@ -39,8 +41,10 @@ public class Board : MonoBehaviour
     }
 
     private IEnumerator ProcessGameLogic()
-    {
+    { 
         isFinishTurn = false;
+ 
+        UpdateUIPanel();
 
         // DO ROLL HERE
         bool doRoll = false;
@@ -51,11 +55,17 @@ public class Board : MonoBehaviour
         }
         else
         {
+            // display message requesting tap
+            uiPanelController.DisplayTapMsg();
             // wait for tap.
             while (!Input.GetMouseButton(0))
             {
                 yield return null;
             }
+            tapEvent.Invoke();
+            uiPanelController.ClearMsg();
+
+            // roll
             doRoll = true;
         }
 
@@ -71,8 +81,11 @@ public class Board : MonoBehaviour
             if (!Dice.IsDiceRunning && !PlayerController.IsProcessing)
             {
                 print("Start Moving.");
-//                yield return playerController.StartCoroutine(playerController.ProcessTurn(Dice.DieANum + Dice.DieBNum));
-                yield return playerController.StartCoroutine(playerController.ProcessTurn(25));
+                playerController.ProcessTurn(Dice.DieANum, Dice.DieBNum);
+                while (PlayerController.IsProcessing)
+                {
+                    yield return null;
+                }
                 print("End Moving.");
             }
 
@@ -82,5 +95,13 @@ public class Board : MonoBehaviour
                 print("End Turn!");
             }
         }
+    }
+
+    private void UpdateUIPanel()
+    {
+        // update player
+        uiPanelController.UpdatePlayer(playerController.Players[playerController.CurrentPlayer], true);
+        uiPanelController.ResetMsgBox();
+        UIPanelController.HasClicked = false;
     }
 }

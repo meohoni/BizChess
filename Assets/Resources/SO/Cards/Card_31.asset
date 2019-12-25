@@ -16,9 +16,8 @@ MonoBehaviour:
   type: 0
   colorName: 6
   titleKey: Vo Thi Sau
-  value: 60
-  description_key: 
-  feeBuildHouse: 50
-  feeBuildHotel: 100
-  morgate: 30
-  landingFees: 020000000a0000001e0000005a000000a0000000fa000000
+  value: 300
+  feeBuildHouse: 200
+  feeBuildHotel: 400
+  morgate: 150
+  landingFees: 1a0000008200000086010000840300004c040000fb040000

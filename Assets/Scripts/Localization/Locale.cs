@@ -33,7 +33,7 @@ public static class Locale
                 if (currentLocalizationText != null)
                 {
                     currentLanguageFileHasBeenFound = true;
-                    // We wplit on newlines to retrieve the key pairs
+                    // We split on newlines to retrieve the key pairs
                     string[] lines = currentLocalizationText.text.Split(new string[] { "\r\n", "\n\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
                     CurrentLanguageStrings.Clear();
                     for (int i = 0; i < lines.Length; i++)
